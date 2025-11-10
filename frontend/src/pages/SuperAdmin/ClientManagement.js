@@ -29,36 +29,75 @@ const STATUS_COLORS = {
 
 // Helper function to format error messages from FastAPI validation errors
 const formatErrorMessage = (error) => {
-  if (!error.response) {
-    return 'Network error. Please check your connection.';
-  }
+  try {
+    // Handle network errors
+    if (!error || !error.response) {
+      return 'Network error. Please check your connection.';
+    }
 
-  const { data } = error.response;
+    const { data } = error.response;
 
-  // Handle FastAPI validation errors (array of error objects)
-  if (Array.isArray(data)) {
-    return data.map(err => err.msg || JSON.stringify(err)).join(', ');
-  }
+    // If data is null or undefined
+    if (!data) {
+      return 'An error occurred. Please try again.';
+    }
 
-  // Handle validation errors with detail array
-  if (data?.detail && Array.isArray(data.detail)) {
-    return data.detail.map(err => {
-      if (typeof err === 'string') return err;
-      if (err.msg) {
-        const field = err.loc ? err.loc[err.loc.length - 1] : '';
-        return field ? `${field}: ${err.msg}` : err.msg;
+    // Handle FastAPI validation errors (array of error objects)
+    if (Array.isArray(data)) {
+      const messages = data.map(err => {
+        if (typeof err === 'string') return err;
+        if (err && typeof err === 'object' && err.msg) return String(err.msg);
+        return 'Validation error';
+      }).filter(Boolean);
+      return messages.length > 0 ? messages.join(', ') : 'Validation error occurred';
+    }
+
+    // Handle validation errors with detail array
+    if (data.detail && Array.isArray(data.detail)) {
+      const messages = data.detail.map(err => {
+        if (typeof err === 'string') return err;
+        if (err && typeof err === 'object') {
+          if (err.msg) {
+            const field = err.loc && Array.isArray(err.loc) ? err.loc[err.loc.length - 1] : '';
+            const message = String(err.msg);
+            return field ? `${field}: ${message}` : message;
+          }
+          // If error object has no msg field, try to extract any useful info
+          if (err.type) return `Validation error: ${err.type}`;
+        }
+        return 'Validation error';
+      }).filter(Boolean);
+      return messages.length > 0 ? messages.join(', ') : 'Validation error occurred';
+    }
+
+    // Handle simple string detail
+    if (data.detail) {
+      if (typeof data.detail === 'string') {
+        return data.detail;
       }
-      return JSON.stringify(err);
-    }).join(', ');
-  }
+      // If detail is an object, try to extract a message
+      if (typeof data.detail === 'object' && data.detail.msg) {
+        return String(data.detail.msg);
+      }
+    }
 
-  // Handle simple string detail
-  if (data?.detail && typeof data.detail === 'string') {
-    return data.detail;
-  }
+    // Handle message field
+    if (data.message && typeof data.message === 'string') {
+      return data.message;
+    }
 
-  // Fallback
-  return 'An error occurred. Please try again.';
+    // Last resort: try to stringify safely
+    if (typeof data === 'string') {
+      return data;
+    }
+
+    // Absolute fallback
+    return 'An error occurred. Please try again.';
+  } catch (e) {
+    // If anything goes wrong in error formatting, return safe string
+    console.error('Error formatting error message:', e);
+    return 'An error occurred. Please try again.';
+  }
 };
 
 export default function ClientManagement() {
