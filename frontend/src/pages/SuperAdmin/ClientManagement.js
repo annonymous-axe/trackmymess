@@ -342,6 +342,92 @@ export default function ClientManagement() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Edit Client Dialog */}
+        <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Client</DialogTitle>
+              <DialogDescription>Update client/tenant details</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_mess_name">Mess Name *</Label>
+                  <Input
+                    id="edit_mess_name"
+                    value={formData.mess_name}
+                    onChange={(e) => setFormData({ ...formData, mess_name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_owner_name">Owner Name *</Label>
+                  <Input
+                    id="edit_owner_name"
+                    value={formData.owner_name}
+                    onChange={(e) => setFormData({ ...formData, owner_name: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_mobile">Mobile * (10 digits)</Label>
+                  <Input
+                    id="edit_mobile"
+                    type="tel"
+                    pattern="[0-9]{10}"
+                    value={formData.mobile}
+                    onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_capacity">Capacity *</Label>
+                  <Input
+                    id="edit_capacity"
+                    type="number"
+                    min="1"
+                    value={formData.capacity}
+                    onChange={(e) => setFormData({ ...formData, capacity: parseInt(e.target.value) })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit_address">Address *</Label>
+                <Input
+                  id="edit_address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit_subscription_plan">Subscription Plan *</Label>
+                <Select
+                  value={formData.subscription_plan}
+                  onValueChange={(value) => setFormData({ ...formData, subscription_plan: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PLANS.map((plan) => (
+                      <SelectItem key={plan.value} value={plan.value}>
+                        {plan.label} - ₹{plan.price}/month
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <Button type="submit" className="w-full gradient-primary text-white">
+                Update Client
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
