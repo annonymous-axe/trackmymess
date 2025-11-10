@@ -1198,6 +1198,302 @@ async def generate_monthly_invoices(month: int = Body(...), year: int = Body(...
     
     return {"message": f"Generated {invoices_created} invoices for {month}/{year}"}
 
+# Staff Management Routes
+@api_router.post("/admin/staff")
+async def create_staff(staff_data: dict = Body(...), current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    staff_id = str(uuid.uuid4())
+    now = datetime.now(timezone.utc)
+    
+    staff_doc = {
+        "id": staff_id,
+        "tenant_id": tenant["id"],
+        "full_name": staff_data["full_name"],
+        "gender": staff_data["gender"],
+        "mobile": staff_data["mobile"],
+        "email": staff_data.get("email"),
+        "address": staff_data["address"],
+        "role": staff_data["role"],
+        "joining_date": staff_data["joining_date"],
+        "salary": staff_data["salary"],
+        "is_active": True,
+        "total_advances": 0,
+        "total_paid": 0,
+        "created_at": now.isoformat()
+    }
+    
+    await db.staff.insert_one(staff_doc)
+    return staff_doc
+
+@api_router.get("/admin/staff")
+async def get_staff(current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    staff_list = await db.staff.find({"tenant_id": tenant["id"]}, {"_id": 0}).to_list(1000)
+    return staff_list
+
+@api_router.get("/admin/staff/{staff_id}")
+async def get_staff_detail(staff_id: str, current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    staff = await db.staff.find_one({"id": staff_id, "tenant_id": tenant["id"]}, {"_id": 0})
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    
+    # Get payment history
+    payments = await db.staff_payments.find({"staff_id": staff_id, "tenant_id": tenant["id"]}, {"_id": 0}).to_list(1000)
+    staff["payment_history"] = payments
+    
+    return staff
+
+@api_router.put("/admin/staff/{staff_id}")
+async def update_staff(staff_id: str, updates: dict = Body(...), current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    staff = await db.staff.find_one({"id": staff_id, "tenant_id": tenant["id"]})
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    
+    if updates:
+        await db.staff.update_one({"id": staff_id}, {"$set": updates})
+    
+    updated_staff = await db.staff.find_one({"id": staff_id}, {"_id": 0})
+    return updated_staff
+
+@api_router.delete("/admin/staff/{staff_id}")
+async def delete_staff(staff_id: str, current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    result = await db.staff.delete_one({"id": staff_id, "tenant_id": tenant["id"]})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    return {"message": "Staff deleted successfully"}
+
+@api_router.post("/admin/staff/{staff_id}/payment")
+async def add_staff_payment(staff_id: str, payment_data: dict = Body(...), current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    staff = await db.staff.find_one({"id": staff_id, "tenant_id": tenant["id"]})
+    if not staff:
+        raise HTTPException(status_code=404, detail="Staff not found")
+    
+    payment_id = str(uuid.uuid4())
+    now = datetime.now(timezone.utc)
+    
+    payment_doc = {
+        "id": payment_id,
+        "tenant_id": tenant["id"],
+        "staff_id": staff_id,
+        "staff_name": staff["full_name"],
+        "amount": payment_data["amount"],
+        "payment_type": payment_data["payment_type"],
+        "notes": payment_data.get("notes"),
+        "payment_date": now.isoformat(),
+        "created_at": now.isoformat()
+    }
+    
+    await db.staff_payments.insert_one(payment_doc)
+    
+    # Update staff totals
+    if payment_data["payment_type"] == "ADVANCE":
+        await db.staff.update_one({"id": staff_id}, {"$inc": {"total_advances": payment_data["amount"]}})
+    elif payment_data["payment_type"] == "SALARY":
+        await db.staff.update_one({"id": staff_id}, {"$inc": {"total_paid": payment_data["amount"]}})
+    
+    return payment_doc
+
+# Reports Routes
+@api_router.get("/admin/reports/customers-with-dues")
+async def get_customers_with_dues(current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    customers = await db.customers.find({
+        "tenant_id": tenant["id"],
+        "is_active": True,
+        "current_dues": {"$gt": 0}
+    }, {"_id": 0}).to_list(1000)
+    return customers
+
+@api_router.get("/admin/reports/aging")
+async def get_aging_report(current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    # Get all invoices with dues
+    invoices = await db.invoices.find({
+        "tenant_id": tenant["id"],
+        "due_amount": {"$gt": 0}
+    }, {"_id": 0}).to_list(1000)
+    
+    now = datetime.now(timezone.utc)
+    aging_data = {"0-30": [], "31-60": [], "61-90": [], "90+": []}
+    
+    for invoice in invoices:
+        days_old = (now - datetime.fromisoformat(invoice["generated_at"])).days
+        customer = await db.customers.find_one({"id": invoice["customer_id"]}, {"_id": 0})
+        
+        invoice_data = {
+            "customer_name": invoice["customer_name"],
+            "customer_mobile": customer.get("mobile", "") if customer else "",
+            "invoice_number": invoice["invoice_number"],
+            "due_amount": invoice["due_amount"],
+            "days_old": days_old
+        }
+        
+        if days_old <= 30:
+            aging_data["0-30"].append(invoice_data)
+        elif days_old <= 60:
+            aging_data["31-60"].append(invoice_data)
+        elif days_old <= 90:
+            aging_data["61-90"].append(invoice_data)
+        else:
+            aging_data["90+"].append(invoice_data)
+    
+    return aging_data
+
+@api_router.get("/admin/reports/meal-consumption")
+async def get_meal_consumption(month: int, year: int, current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    start_date = datetime(year, month, 1, tzinfo=timezone.utc)
+    if month == 12:
+        end_date = datetime(year + 1, 1, 1, tzinfo=timezone.utc)
+    else:
+        end_date = datetime(year, month + 1, 1, tzinfo=timezone.utc)
+    
+    attendance_records = await db.attendance.find({
+        "tenant_id": tenant["id"],
+        "date": {"$gte": start_date.isoformat(), "$lt": end_date.isoformat()}
+    }, {"_id": 0}).to_list(10000)
+    
+    consumption = defaultdict(lambda: {"breakfast": 0, "lunch": 0, "dinner": 0, "total": 0})
+    
+    for record in attendance_records:
+        customer_id = record["customer_id"]
+        if record.get("breakfast"):
+            consumption[customer_id]["breakfast"] += 1
+        if record.get("lunch"):
+            consumption[customer_id]["lunch"] += 1
+        if record.get("dinner"):
+            consumption[customer_id]["dinner"] += 1
+        consumption[customer_id]["total"] = consumption[customer_id]["breakfast"] + consumption[customer_id]["lunch"] + consumption[customer_id]["dinner"]
+    
+    # Enrich with customer names
+    result = []
+    for customer_id, meals in consumption.items():
+        customer = await db.customers.find_one({"id": customer_id}, {"_id": 0})
+        if customer:
+            result.append({
+                "customer_name": customer["full_name"],
+                "customer_mobile": customer["mobile"],
+                **meals
+            })
+    
+    return result
+
+@api_router.get("/admin/reports/revenue")
+async def get_revenue_report(months: int = 6, current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    now = datetime.now(timezone.utc)
+    revenue_data = []
+    
+    for i in range(months):
+        target_date = now - timedelta(days=30*i)
+        month_start = target_date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        if target_date.month == 12:
+            month_end = target_date.replace(year=target_date.year + 1, month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+        else:
+            month_end = target_date.replace(month=target_date.month + 1, day=1, hour=0, minute=0, second=0, microsecond=0)
+        
+        payments = await db.payments.find({
+            "tenant_id": tenant["id"],
+            "payment_status": PaymentStatus.COMPLETED,
+            "payment_date": {"$gte": month_start.isoformat(), "$lt": month_end.isoformat()}
+        }, {"_id": 0}).to_list(10000)
+        
+        total = sum(p["amount"] for p in payments)
+        revenue_data.append({
+            "month": month_start.strftime("%b %Y"),
+            "revenue": total,
+            "payment_count": len(payments)
+        })
+    
+    return list(reversed(revenue_data))
+
+# Export Routes (PDF/CSV)
+@api_router.get("/admin/export/customers")
+async def export_customers(format: str = "csv", current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    # Check if downloads are allowed
+    plan_config = PLAN_CONFIG[tenant["subscription_plan"]]
+    if not plan_config.get("allow_downloads", False):
+        raise HTTPException(status_code=403, detail="Downloads not allowed on your current plan. Please upgrade.")
+    
+    customers = await db.customers.find({"tenant_id": tenant["id"]}, {"_id": 0}).to_list(10000)
+    
+    if format == "csv":
+        import csv
+        from io import StringIO
+        output = StringIO()
+        writer = csv.DictWriter(output, fieldnames=["full_name", "mobile", "email", "meal_plan_name", "monthly_rate", "current_dues", "is_active"])
+        writer.writeheader()
+        for c in customers:
+            writer.writerow({
+                "full_name": c["full_name"],
+                "mobile": c["mobile"],
+                "email": c.get("email", ""),
+                "meal_plan_name": c.get("meal_plan_name", ""),
+                "monthly_rate": c["monthly_rate"],
+                "current_dues": c["current_dues"],
+                "is_active": c["is_active"]
+            })
+        return {"data": output.getvalue(), "filename": f"customers_{datetime.now().strftime('%Y%m%d')}.csv"}
+    
+    return {"message": "PDF export not implemented yet"}
+
+# Subscription Management Routes (Super Admin)
+@api_router.post("/super-admin/subscriptions/renew/{tenant_id}")
+async def renew_subscription(tenant_id: str, months: int = Body(...), current_user: dict = Depends(require_super_admin)):
+    tenant = await db.tenants.find_one({"id": tenant_id})
+    if not tenant:
+        raise HTTPException(status_code=404, detail="Tenant not found")
+    
+    current_end = datetime.fromisoformat(tenant["subscription_end"])
+    new_end = current_end + timedelta(days=30*months)
+    
+    await db.tenants.update_one({"id": tenant_id}, {"$set": {
+        "subscription_end": new_end.isoformat(),
+        "status": TenantStatus.ACTIVE
+    }})
+    
+    # Log the renewal
+    log_id = str(uuid.uuid4())
+    await db.subscription_logs.insert_one({
+        "id": log_id,
+        "tenant_id": tenant_id,
+        "previous_plan": tenant["subscription_plan"],
+        "new_plan": tenant["subscription_plan"],
+        "amount": PLAN_CONFIG[tenant["subscription_plan"]]["price"] * months,
+        "payment_status": PaymentStatus.COMPLETED,
+        "notes": f"Renewed for {months} months",
+        "changed_at": datetime.now(timezone.utc).isoformat()
+    })
+    
+    return {"message": "Subscription renewed successfully", "new_end_date": new_end.isoformat()}
+
+@api_router.get("/super-admin/subscriptions/logs")
+async def get_subscription_logs(current_user: dict = Depends(require_super_admin)):
+    logs = await db.subscription_logs.find({}, {"_id": 0}).sort("changed_at", -1).to_list(1000)
+    return logs
+
+# Customer Detail Route
+@api_router.get("/admin/customers/{customer_id}/detail")
+async def get_customer_detail(customer_id: str, current_user: dict = Depends(require_admin), tenant: dict = Depends(get_tenant_info)):
+    customer = await db.customers.find_one({"id": customer_id, "tenant_id": tenant["id"]}, {"_id": 0})
+    if not customer:
+        raise HTTPException(status_code=404, detail="Customer not found")
+    
+    # Get payment history
+    payments = await db.payments.find({"customer_id": customer_id, "tenant_id": tenant["id"]}, {"_id": 0}).sort("payment_date", -1).to_list(100)
+    
+    # Get invoices
+    invoices = await db.invoices.find({"customer_id": customer_id, "tenant_id": tenant["id"]}, {"_id": 0}).sort("generated_at", -1).to_list(100)
+    
+    # Get attendance summary (last 30 days)
+    thirty_days_ago = datetime.now(timezone.utc) - timedelta(days=30)
+    attendance = await db.attendance.find({
+        "customer_id": customer_id,
+        "tenant_id": tenant["id"],
+        "date": {"$gte": thirty_days_ago.isoformat()}
+    }, {"_id": 0}).to_list(1000)
+    
+    return {
+        "customer": customer,
+        "payments": payments,
+        "invoices": invoices,
+        "attendance_records": attendance
+    }
+
 # Include router
 app.include_router(api_router)
 
