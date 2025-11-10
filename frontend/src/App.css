@@ -937,7 +937,7 @@ table tbody td {
     -45deg,
     var(--primary-600),
     var(--secondary-600),
-    var(--primary-500),
+    var(--accent-600),
     var(--secondary-500)
   );
   background-size: 400% 400%;
