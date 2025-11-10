@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Utensils, Lock, User as UserIcon, ArrowRight } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -26,6 +27,10 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Theme Toggle - Top Right */}
+      <div className="absolute top-6 right-6 z-20">
+        <ThemeToggle />
+      </div>
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
