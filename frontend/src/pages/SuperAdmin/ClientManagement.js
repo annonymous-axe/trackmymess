@@ -27,6 +27,40 @@ const STATUS_COLORS = {
   SUSPENDED: 'bg-red-100 text-red-800',
 };
 
+// Helper function to format error messages from FastAPI validation errors
+const formatErrorMessage = (error) => {
+  if (!error.response) {
+    return 'Network error. Please check your connection.';
+  }
+
+  const { data } = error.response;
+
+  // Handle FastAPI validation errors (array of error objects)
+  if (Array.isArray(data)) {
+    return data.map(err => err.msg || JSON.stringify(err)).join(', ');
+  }
+
+  // Handle validation errors with detail array
+  if (data?.detail && Array.isArray(data.detail)) {
+    return data.detail.map(err => {
+      if (typeof err === 'string') return err;
+      if (err.msg) {
+        const field = err.loc ? err.loc[err.loc.length - 1] : '';
+        return field ? `${field}: ${err.msg}` : err.msg;
+      }
+      return JSON.stringify(err);
+    }).join(', ');
+  }
+
+  // Handle simple string detail
+  if (data?.detail && typeof data.detail === 'string') {
+    return data.detail;
+  }
+
+  // Fallback
+  return 'An error occurred. Please try again.';
+};
+
 export default function ClientManagement() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
