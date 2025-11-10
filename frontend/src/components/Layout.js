@@ -30,6 +30,7 @@ import {
   Bell,
   Search
 } from 'lucide-react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Layout({ children, title }) {
   const { user, logout } = useAuth();
