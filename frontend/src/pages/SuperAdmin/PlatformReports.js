@@ -172,9 +172,9 @@ export default function PlatformReports() {
         </div>
 
         {/* Recent Subscription Activities */}
-        <Card className="glass-strong">
+        <Card className="bg-white border border-gray-200">
           <CardHeader>
-            <CardTitle>Recent Subscription Activities</CardTitle>
+            <CardTitle className="text-gray-900">Recent Subscription Activities</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
