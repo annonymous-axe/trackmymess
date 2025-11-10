@@ -283,17 +283,28 @@ export default function MealPlanManagement() {
                       <Badge className="mt-1" variant="outline">Default</Badge>
                     )}
                   </div>
-                  {!plan.is_default && (
+                  <div className="flex gap-2">
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => handleDelete(plan.id)}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50"
-                      data-testid={`delete-plan-${plan.id}`}
+                      onClick={() => handleEdit(plan)}
+                      className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                      data-testid={`edit-plan-${plan.id}`}
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Edit className="w-4 h-4" />
                     </Button>
-                  )}
+                    {!plan.is_default && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDelete(plan.id)}
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        data-testid={`delete-plan-${plan.id}`}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
