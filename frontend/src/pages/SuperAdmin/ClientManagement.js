@@ -147,15 +147,15 @@ export default function ClientManagement() {
           <p className="text-gray-600">Total Clients: {clients.length}</p>
           <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
             <DialogTrigger asChild>
-              <Button className="bg-gradient-to-r from-blue-500 to-cyan-500" data-testid="add-client-button">
+              <Button className="gradient-primary text-white shadow-lg" data-testid="add-client-button">
                 <Plus className="w-4 h-4 mr-2" />
-                Add Client
+                Add New Mess Owner
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>Add New Client</DialogTitle>
-                <DialogDescription>Create a new mess/canteen account</DialogDescription>
+                <DialogTitle>Add New Mess Owner / Client</DialogTitle>
+                <DialogDescription>Create a new mess/canteen with admin login credentials</DialogDescription>
               </DialogHeader>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
