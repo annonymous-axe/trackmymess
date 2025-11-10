@@ -347,6 +347,7 @@ export default function CustomerManagement() {
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Joining Date</th>
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Status</th>
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Dues</th>
+                    <th className="text-center p-3 text-sm font-medium text-gray-600">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -369,6 +370,16 @@ export default function CustomerManagement() {
                         <span className={customer.current_dues > 0 ? 'text-red-600 font-medium' : 'text-green-600'}>
                           ₹{customer.current_dues}
                         </span>
+                      </td>
+                      <td className="p-3 text-center">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(customer)}
+                          data-testid={`edit-customer-${customer.id}`}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
                       </td>
                     </tr>
                   ))}
