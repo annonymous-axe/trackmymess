@@ -26,6 +26,18 @@
   --secondary-800: #5b21b6;
   --secondary-900: #4c1d95;
   
+  /* Accent Colors - Cyan */
+  --accent-50: #ecfeff;
+  --accent-100: #cffafe;
+  --accent-200: #a5f3fc;
+  --accent-300: #67e8f9;
+  --accent-400: #22d3ee;
+  --accent-500: #06b6d4;
+  --accent-600: #0891b2;
+  --accent-700: #0e7490;
+  --accent-800: #155e75;
+  --accent-900: #164e63;
+  
   /* Semantic Colors */
   --success: #10b981;
   --success-light: #d1fae5;
@@ -33,8 +45,8 @@
   --warning-light: #fef3c7;
   --error: #ef4444;
   --error-light: #fee2e2;
-  --info: #3b82f6;
-  --info-light: #dbeafe;
+  --info: #06b6d4;
+  --info-light: #cffafe;
   
   /* Neutral Colors */
   --gray-50: #f9fafb;
