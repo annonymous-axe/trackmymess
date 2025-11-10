@@ -25,8 +25,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'linear-gradient(135deg, #e0f2f7 0%, #bde8f5 100%)' }}>
-      <Card className="w-full max-w-md glass fade-in" data-testid="login-card">
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Card className="w-full max-w-md glass fade-in shadow-xl" data-testid="login-card">
         <CardHeader className="text-center space-y-3">
           <div className="mx-auto w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
             <Utensils className="w-8 h-8 text-white" />
