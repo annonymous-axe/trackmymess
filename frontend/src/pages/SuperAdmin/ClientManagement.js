@@ -69,7 +69,8 @@ export default function ClientManagement() {
       resetForm();
       fetchClients();
     } catch (error) {
-      toast.error(error.response?.data?.detail || 'Failed to create client');
+      const errorMessage = formatErrorMessage(error);
+      toast.error(errorMessage);
     }
   };
 
