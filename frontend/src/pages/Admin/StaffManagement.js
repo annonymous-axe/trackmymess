@@ -445,6 +445,91 @@ export default function StaffManagement() {
             </form>
           </DialogContent>
         </Dialog>
+
+        {/* Edit Staff Dialog */}
+        <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Edit Staff Member</DialogTitle>
+              <DialogDescription>Update staff member details</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_full_name">Full Name *</Label>
+                  <Input
+                    id="edit_full_name"
+                    value={formData.full_name}
+                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_mobile">Mobile *</Label>
+                  <Input
+                    id="edit_mobile"
+                    type="tel"
+                    pattern="[0-9]{10}"
+                    value={formData.mobile}
+                    onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_role">Role *</Label>
+                  <Select value={formData.role} onValueChange={(value) => setFormData({ ...formData, role: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {STAFF_ROLES.map((role) => (
+                        <SelectItem key={role.value} value={role.value}>
+                          {role.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_salary">Monthly Salary *</Label>
+                  <Input
+                    id="edit_salary"
+                    type="number"
+                    min="0"
+                    value={formData.salary}
+                    onChange={(e) => setFormData({ ...formData, salary: parseFloat(e.target.value) })}
+                    required
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full gradient-primary text-white">
+                Update Staff Member
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* Staff Attendance Dialog */}
+        <Dialog open={showAttendanceDialog} onOpenChange={setShowAttendanceDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Mark Attendance for {selectedStaff?.full_name}</DialogTitle>
+              <DialogDescription>Record staff attendance for a specific date</DialogDescription>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div className="p-4 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-sm text-green-800">
+                  Staff attendance tracking feature coming soon! Currently, you can track customer attendance.
+                </p>
+              </div>
+              <Button onClick={() => setShowAttendanceDialog(false)} className="w-full">
+                Close
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
