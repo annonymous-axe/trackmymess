@@ -140,11 +140,14 @@ export default function ClientManagement() {
   }
 
   return (
-    <Layout title="Client Management">
+    <Layout title="Client & Mess Owner Management">
       <div className="space-y-6 fade-in">
         {/* Header Actions */}
         <div className="flex justify-between items-center">
-          <p className="text-gray-600">Total Clients: {clients.length}</p>
+          <div>
+            <p className="text-gray-900 font-semibold">Total Mess Owners: {clients.length}</p>
+            <p className="text-sm text-gray-600">Each client includes mess details and admin login</p>
+          </div>
           <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
             <DialogTrigger asChild>
               <Button className="gradient-primary text-white shadow-lg" data-testid="add-client-button">
