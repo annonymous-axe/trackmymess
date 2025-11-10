@@ -122,11 +122,11 @@ backend:
 
   - task: "Client Update Endpoint"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/backend/server.py"
-    stuck_count: 1
+    stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
@@ -137,6 +137,9 @@ backend:
       - working: "NA"
         agent: "main"
         comment: "Fixed validation issues in TenantUpdate model (lines 187-219 in server.py). Added field_validator for mobile (must be 10 digits) and capacity (must be > 0). Also added password validation to TenantCreate model (min 8 characters). Ready for retesting. returns 200), 2) Negative capacity values accepted (should return 422 but returns 200). The TenantUpdate model (lines 187-194) lacks field_validator decorators that exist in TenantCreate model. Valid updates work correctly (200), non-existent tenant returns proper 404. This causes inconsistent validation behavior between create and update operations."
+      - working: true
+        agent: "testing"
+        comment: "✅ VALIDATION FIXES CONFIRMED: PUT /api/super-admin/tenants/{id} now working correctly with all validation fixes implemented. Comprehensive testing completed: ✅ Invalid mobile format (non-10 digits) returns 422 with proper FastAPI error structure, ✅ Invalid mobile with letters returns 422, ✅ Negative capacity (-10) returns 422 with proper validation error, ✅ Zero capacity returns 422, ✅ Valid updates (mess_name, owner_name, address, valid mobile, positive capacity) return 200 with updated data, ✅ Non-existent tenant returns proper 404. All validation errors return proper FastAPI format with 'detail' array containing objects with 'loc', 'msg', 'type' fields. Authentication working with superadmin/Admin@123. Password validation on create endpoint also confirmed working (short passwords < 8 chars return 422). All validation issues from previous testing have been resolved."
 
 frontend:
   - task: "Client Management Error Handling"
