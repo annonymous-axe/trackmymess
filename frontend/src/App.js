@@ -238,6 +238,22 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/admin/staff"
+        element={
+          <ProtectedRoute role="ADMIN">
+            <StaffManagement />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/reports"
+        element={
+          <ProtectedRoute role="ADMIN">
+            <Reports />
+          </ProtectedRoute>
+        }
+      />
       
       <Route
         path="/"
