@@ -179,17 +179,17 @@ export default function PlatformReports() {
           <CardContent>
             <div className="space-y-3">
               {recentLogs.map((log) => (
-                <div key={log.id} className="p-4 bg-gray-50 rounded-lg flex items-center justify-between">
+                <div key={log.id} className="p-4 bg-gray-50 rounded-lg flex items-center justify-between border border-gray-200">
                   <div>
-                    <p className="font-medium">Tenant: {log.tenant_id.slice(0, 8)}</p>
-                    <p className="text-sm text-gray-600">
+                    <p className="font-medium text-gray-900">Tenant: {log.tenant_id.slice(0, 8)}</p>
+                    <p className="text-sm text-gray-700">
                       {log.previous_plan ? `${log.previous_plan} → ${log.new_plan}` : `New: ${log.new_plan}`}
                     </p>
-                    <p className="text-xs text-gray-500">{new Date(log.changed_at).toLocaleString()}</p>
+                    <p className="text-xs text-gray-600">{new Date(log.changed_at).toLocaleString()}</p>
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-green-600">₹{log.amount}</p>
-                    <p className="text-xs text-gray-600">{log.payment_status}</p>
+                    <p className="text-xs text-gray-700">{log.payment_status}</p>
                   </div>
                 </div>
               ))}
