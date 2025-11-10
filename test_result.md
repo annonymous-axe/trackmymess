@@ -122,18 +122,21 @@ backend:
 
   - task: "Client Update Endpoint"
     implemented: true
-    working: false
+    working: "NA"
     file: "/app/backend/server.py"
     stuck_count: 1
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Testing endpoint to ensure it returns proper validation errors when invalid data is provided"
       - working: false
         agent: "testing"
-        comment: "❌ CRITICAL VALIDATION ISSUES FOUND: PUT /api/super-admin/tenants/{id} has missing validation in TenantUpdate model. Issues: 1) Invalid mobile format accepted (should return 422 but returns 200), 2) Negative capacity values accepted (should return 422 but returns 200). The TenantUpdate model (lines 187-194) lacks field_validator decorators that exist in TenantCreate model. Valid updates work correctly (200), non-existent tenant returns proper 404. This causes inconsistent validation behavior between create and update operations."
+        comment: "❌ CRITICAL VALIDATION ISSUES FOUND: PUT /api/super-admin/tenants/{id} has missing validation in TenantUpdate model. Issues: 1) Invalid mobile format accepted (should return 422 but returns 200), 2) Negative capacity accepted (should return 422). Root cause: TenantUpdate model lacks field_validator decorators."
+      - working: "NA"
+        agent: "main"
+        comment: "Fixed validation issues in TenantUpdate model (lines 187-219 in server.py). Added field_validator for mobile (must be 10 digits) and capacity (must be > 0). Also added password validation to TenantCreate model (min 8 characters). Ready for retesting. returns 200), 2) Negative capacity values accepted (should return 422 but returns 200). The TenantUpdate model (lines 187-194) lacks field_validator decorators that exist in TenantCreate model. Valid updates work correctly (200), non-existent tenant returns proper 404. This causes inconsistent validation behavior between create and update operations."
 
 frontend:
   - task: "Client Management Error Handling"
