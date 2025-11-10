@@ -21,6 +21,7 @@ export default function Layout({ children, title }) {
   const superAdminLinks = [
     { to: '/super-admin', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/super-admin/clients', label: 'Clients', icon: Building2 },
+    { to: '/super-admin/reports', label: 'Platform Reports', icon: BarChart3 },
   ];
 
   const adminLinks = [
