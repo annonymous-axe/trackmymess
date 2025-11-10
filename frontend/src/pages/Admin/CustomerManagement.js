@@ -393,6 +393,108 @@ export default function CustomerManagement() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Edit Customer Dialog */}
+        <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+          <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>Edit Customer</DialogTitle>
+              <DialogDescription>Update customer details</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_full_name">Full Name *</Label>
+                  <Input
+                    id="edit_full_name"
+                    value={formData.full_name}
+                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_gender">Gender *</Label>
+                  <Select value={formData.gender} onValueChange={(value) => setFormData({ ...formData, gender: value })}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="MALE">Male</SelectItem>
+                      <SelectItem value="FEMALE">Female</SelectItem>
+                      <SelectItem value="OTHER">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_mobile">Mobile * (10 digits)</Label>
+                  <Input
+                    id="edit_mobile"
+                    type="tel"
+                    pattern="[0-9]{10}"
+                    value={formData.mobile}
+                    onChange={(e) => setFormData({ ...formData, mobile: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_email">Email</Label>
+                  <Input
+                    id="edit_email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit_address">Address *</Label>
+                <Input
+                  id="edit_address"
+                  value={formData.address}
+                  onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_meal_plan_id">Meal Plan *</Label>
+                  <Select value={formData.meal_plan_id} onValueChange={(value) => {
+                    const plan = mealPlans.find(p => p.id === value);
+                    setFormData({ ...formData, meal_plan_id: value, monthly_rate: plan ? plan.rate : formData.monthly_rate });
+                  }}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select meal plan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mealPlans.map((plan) => (
+                        <SelectItem key={plan.id} value={plan.id}>
+                          {plan.name} - ₹{plan.rate}/{plan.billing_type === 'MONTHLY' ? 'month' : 'day'}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_monthly_rate">Monthly Rate *</Label>
+                  <Input
+                    id="edit_monthly_rate"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.monthly_rate}
+                    onChange={(e) => setFormData({ ...formData, monthly_rate: parseFloat(e.target.value) })}
+                    required
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full gradient-primary text-white">
+                Update Customer
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
