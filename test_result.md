@@ -111,23 +111,29 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Testing endpoint to ensure it returns proper validation errors when invalid data is provided"
+      - working: true
+        agent: "testing"
+        comment: "✅ COMPREHENSIVE TESTING COMPLETED: POST /api/super-admin/tenants working correctly. All validation scenarios tested: ✅ Valid client creation (200/201), ✅ Invalid email format (422 with proper FastAPI error structure), ✅ Missing required fields (422), ✅ Duplicate email/username (400), ✅ Invalid mobile number validation (422), ✅ Short username validation (422). FastAPI returns proper error structure with 'detail' array containing objects with 'loc', 'msg', 'type' fields as expected by frontend formatErrorMessage() function. Authentication working with credentials: superadmin/Admin@123. Minor issue: Password validation missing (short passwords accepted) but not critical for core functionality."
 
   - task: "Client Update Endpoint"
     implemented: true
-    working: true
+    working: false
     file: "/app/backend/server.py"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: "NA"
         agent: "main"
         comment: "Testing endpoint to ensure it returns proper validation errors when invalid data is provided"
+      - working: false
+        agent: "testing"
+        comment: "❌ CRITICAL VALIDATION ISSUES FOUND: PUT /api/super-admin/tenants/{id} has missing validation in TenantUpdate model. Issues: 1) Invalid mobile format accepted (should return 422 but returns 200), 2) Negative capacity values accepted (should return 422 but returns 200). The TenantUpdate model (lines 187-194) lacks field_validator decorators that exist in TenantCreate model. Valid updates work correctly (200), non-existent tenant returns proper 404. This causes inconsistent validation behavior between create and update operations."
 
 frontend:
   - task: "Client Management Error Handling"
