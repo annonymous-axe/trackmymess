@@ -50,6 +50,7 @@ pyflakes==3.4.0
 Pygments==2.19.2
 PyJWT==2.10.1
 pymongo==4.5.0
+pypdf==6.2.0
 pyphen==0.17.2
 pytest==8.4.2
 python-dateutil==2.9.0.post0
