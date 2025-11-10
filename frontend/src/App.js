@@ -9,6 +9,7 @@ import '@/App.css';
 import Login from '@/pages/Login';
 import SuperAdminDashboard from '@/pages/SuperAdmin/Dashboard';
 import ClientManagement from '@/pages/SuperAdmin/ClientManagement';
+import PlatformReports from '@/pages/SuperAdmin/PlatformReports';
 import AdminDashboard from '@/pages/Admin/Dashboard';
 import CustomerManagement from '@/pages/Admin/CustomerManagement';
 import MealPlanManagement from '@/pages/Admin/MealPlanManagement';
