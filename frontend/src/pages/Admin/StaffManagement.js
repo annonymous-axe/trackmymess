@@ -345,18 +345,39 @@ export default function StaffManagement() {
                           <Button
                             size="sm"
                             variant="outline"
+                            onClick={() => handleEdit(member)}
+                            title="Edit Staff"
+                          >
+                            <Edit className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
                             onClick={() => {
                               setSelectedStaff(member);
                               setShowPaymentDialog(true);
                             }}
+                            title="Record Payment"
                           >
                             <DollarSign className="w-4 h-4" />
                           </Button>
                           <Button
                             size="sm"
                             variant="outline"
+                            onClick={() => {
+                              setSelectedStaff(member);
+                              setShowAttendanceDialog(true);
+                            }}
+                            title="Mark Attendance"
+                          >
+                            <Calendar className="w-4 h-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="outline"
                             className="text-red-600 hover:bg-red-50"
                             onClick={() => handleDelete(member.id)}
+                            title="Delete Staff"
                           >
                             <Trash2 className="w-4 h-4" />
                           </Button>
