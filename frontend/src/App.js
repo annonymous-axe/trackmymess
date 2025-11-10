@@ -178,7 +178,9 @@ function AppRoutes() {
         path="/super-admin/clients"
         element={
           <ProtectedRoute role="SUPER_ADMIN">
-            <ClientManagement />
+            <ErrorBoundary>
+              <ClientManagement />
+            </ErrorBoundary>
           </ProtectedRoute>
         }
       />
