@@ -152,9 +152,9 @@ export default function PlatformReports() {
             </CardContent>
           </Card>
 
-          <Card className="glass-strong">
+          <Card className="bg-white border border-gray-200">
             <CardHeader>
-              <CardTitle>Revenue by Plan</CardTitle>
+              <CardTitle className="text-gray-900">Revenue by Plan</CardTitle>
             </CardHeader>
             <CardContent>
               <ResponsiveContainer width="100%" height={300}>
