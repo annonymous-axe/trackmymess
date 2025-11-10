@@ -78,6 +78,51 @@ export default function MealPlanManagement() {
     }
   };
 
+  const handleEdit = (plan) => {
+    setEditingPlan(plan);
+    const mealsObj = { Breakfast: false, Lunch: false, Dinner: false };
+    plan.meals_included.forEach(meal => {
+      mealsObj[meal] = true;
+    });
+    setFormData({
+      name: plan.name,
+      description: plan.description,
+      meals_included: mealsObj,
+      billing_type: plan.billing_type,
+      rate: plan.rate,
+      is_active: plan.is_active,
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const meals = Object.keys(formData.meals_included).filter(key => formData.meals_included[key]);
+      if (meals.length === 0) {
+        toast.error('Please select at least one meal');
+        return;
+      }
+
+      const submitData = {
+        name: formData.name,
+        description: formData.description,
+        meals_included: meals,
+        billing_type: formData.billing_type,
+        rate: formData.rate,
+        is_active: formData.is_active,
+      };
+
+      await axios.put(`${API}/admin/meal-plans/${editingPlan.id}`, submitData);
+      toast.success('Meal plan updated successfully');
+      setShowEditDialog(false);
+      setEditingPlan(null);
+      fetchPlans();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to update meal plan');
+    }
+  };
+
   const handleDelete = async (planId) => {
     if (!window.confirm('Are you sure you want to delete this meal plan?')) {
       return;
