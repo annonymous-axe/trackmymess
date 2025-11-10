@@ -99,10 +99,13 @@ export default function Layout({ children, title }) {
               </div>
 
               {/* Notifications */}
-              <button className="relative p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                <Bell className="w-5 h-5 text-gray-600" />
+              <button className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                <Bell className="w-5 h-5 text-gray-600 dark:text-gray-300" />
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
+
+              {/* Theme Toggle */}
+              <ThemeToggle />
 
               {/* User Dropdown */}
               <DropdownMenu>
