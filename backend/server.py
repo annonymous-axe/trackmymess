@@ -85,6 +85,13 @@ class PauseRequestStatus(str, Enum):
     APPROVED = "APPROVED"
     REJECTED = "REJECTED"
 
+class StaffRole(str, Enum):
+    MANAGER = "MANAGER"
+    ATTENDANCE_OPERATOR = "ATTENDANCE_OPERATOR"
+    ACCOUNTANT = "ACCOUNTANT"
+    COOK = "COOK"
+    HELPER = "HELPER"
+
 # Plan Configuration
 PLAN_CONFIG = {
     SubscriptionPlan.FREE_TRIAL: {
