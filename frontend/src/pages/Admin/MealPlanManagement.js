@@ -17,6 +17,8 @@ export default function MealPlanManagement() {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editingPlan, setEditingPlan] = useState(null);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
