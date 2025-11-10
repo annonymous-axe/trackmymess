@@ -31,6 +31,8 @@ export default function ClientManagement() {
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editingClient, setEditingClient] = useState(null);
   const [formData, setFormData] = useState({
     mess_name: '',
     owner_name: '',
