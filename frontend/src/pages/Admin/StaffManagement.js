@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import axios from 'axios';
 import { API } from '@/App';
 import { toast } from 'sonner';
-import { Plus, Edit, Trash2, DollarSign, Users2 } from 'lucide-react';
+import { Plus, Edit, Trash2, DollarSign, Users2, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 
 const STAFF_ROLES = [
