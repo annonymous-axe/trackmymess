@@ -181,6 +181,14 @@ function AppRoutes() {
           </ProtectedRoute>
         }
       />
+      <Route
+        path="/super-admin/reports"
+        element={
+          <ProtectedRoute role="SUPER_ADMIN">
+            <PlatformReports />
+          </ProtectedRoute>
+        }
+      />
       
       {/* Admin Routes */}
       <Route
