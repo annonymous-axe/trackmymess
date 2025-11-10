@@ -26,11 +26,13 @@ export default function Layout({ children, title }) {
   const adminLinks = [
     { to: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { to: '/admin/customers', label: 'Customers', icon: Users },
+    { to: '/admin/staff', label: 'Staff', icon: Users2 },
     { to: '/admin/meal-plans', label: 'Meal Plans', icon: Sandwich },
     { to: '/admin/attendance', label: 'Attendance', icon: Calendar },
     { to: '/admin/pause-requests', label: 'Pause Requests', icon: PauseCircle },
     { to: '/admin/payments', label: 'Payments', icon: CreditCard },
     { to: '/admin/invoices', label: 'Invoices', icon: FileText },
+    { to: '/admin/reports', label: 'Reports', icon: BarChart3 },
   ];
 
   const links = isSuperAdmin ? superAdminLinks : adminLinks;
