@@ -25,8 +25,11 @@ export default function StaffManagement() {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
   const [showPaymentDialog, setShowPaymentDialog] = useState(false);
+  const [showAttendanceDialog, setShowAttendanceDialog] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState(null);
+  const [editingStaff, setEditingStaff] = useState(null);
   const [formData, setFormData] = useState({
     full_name: '',
     gender: 'MALE',
