@@ -77,40 +77,48 @@ export default function PlatformReports() {
       <div className="space-y-6 fade-in">
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="stat-card gradient-primary text-white">
+          <div className="stat-card bg-white border-l-4 border-blue-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-90 mb-1">Total Clients</p>
-                <p className="text-3xl font-bold">{tenants.length}</p>
+                <p className="text-sm text-gray-600 mb-1">Total Clients</p>
+                <p className="text-3xl font-bold text-gray-900">{tenants.length}</p>
               </div>
-              <Building2 className="w-12 h-12 opacity-80" />
+              <div className="w-12 h-12 rounded-full gradient-primary flex items-center justify-center">
+                <Building2 className="w-6 h-6 text-white" />
+              </div>
             </div>
           </div>
-          <div className="stat-card gradient-success text-white">
+          <div className="stat-card bg-white border-l-4 border-green-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-90 mb-1">Active Clients</p>
-                <p className="text-3xl font-bold">{tenants.filter(t => t.status === 'ACTIVE').length}</p>
+                <p className="text-sm text-gray-600 mb-1">Active Clients</p>
+                <p className="text-3xl font-bold text-gray-900">{tenants.filter(t => t.status === 'ACTIVE').length}</p>
               </div>
-              <Users className="w-12 h-12 opacity-80" />
+              <div className="w-12 h-12 rounded-full gradient-success flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
             </div>
           </div>
-          <div className="stat-card gradient-warning text-white">
+          <div className="stat-card bg-white border-l-4 border-orange-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-90 mb-1">Total Customers</p>
-                <p className="text-3xl font-bold">{tenants.reduce((sum, t) => sum + t.customer_count, 0)}</p>
+                <p className="text-sm text-gray-600 mb-1">Total Customers</p>
+                <p className="text-3xl font-bold text-gray-900">{tenants.reduce((sum, t) => sum + t.customer_count, 0)}</p>
               </div>
-              <Users className="w-12 h-12 opacity-80" />
+              <div className="w-12 h-12 rounded-full gradient-warning flex items-center justify-center">
+                <Users className="w-6 h-6 text-white" />
+              </div>
             </div>
           </div>
-          <div className="stat-card gradient-indigo text-white">
+          <div className="stat-card bg-white border-l-4 border-purple-500">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm opacity-90 mb-1">MRR</p>
-                <p className="text-3xl font-bold">₹{revenueData.reduce((sum, d) => sum + d.revenue, 0)}</p>
+                <p className="text-sm text-gray-600 mb-1">MRR</p>
+                <p className="text-3xl font-bold text-gray-900">₹{revenueData.reduce((sum, d) => sum + d.revenue, 0)}</p>
               </div>
-              <DollarSign className="w-12 h-12 opacity-80" />
+              <div className="w-12 h-12 rounded-full gradient-indigo flex items-center justify-center">
+                <DollarSign className="w-6 h-6 text-white" />
+              </div>
             </div>
           </div>
         </div>
