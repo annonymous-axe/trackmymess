@@ -298,6 +298,7 @@ export default function ClientManagement() {
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Customers</th>
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Status</th>
                     <th className="text-left p-3 text-sm font-medium text-gray-600">Expiry</th>
+                    <th className="text-center p-3 text-sm font-medium text-gray-600">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -319,6 +320,16 @@ export default function ClientManagement() {
                         <Badge className={STATUS_COLORS[client.status]}>{client.status}</Badge>
                       </td>
                       <td className="p-3 text-sm">{formatDate(client.subscription_end)}</td>
+                      <td className="p-3 text-center">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleEdit(client)}
+                          data-testid={`edit-client-${client.id}`}
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
