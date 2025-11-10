@@ -74,24 +74,61 @@ export default function CustomerManagement() {
       await axios.post(`${API}/admin/customers`, submitData);
       toast.success('Customer added successfully');
       setShowAddDialog(false);
-      setFormData({
-        full_name: '',
-        gender: 'MALE',
-        mobile: '',
-        email: '',
-        address: '',
-        emergency_contact: '',
-        joining_date: new Date().toISOString().split('T')[0],
-        meal_plan_id: '',
-        monthly_rate: 0,
-        security_deposit: 0,
-        id_proof_type: '',
-        id_proof_number: '',
-      });
+      resetForm();
       fetchData();
     } catch (error) {
       toast.error(error.response?.data?.detail || 'Failed to add customer');
     }
+  };
+
+  const handleEdit = (customer) => {
+    setEditingCustomer(customer);
+    setFormData({
+      full_name: customer.full_name,
+      gender: customer.gender,
+      mobile: customer.mobile,
+      email: customer.email || '',
+      address: customer.address,
+      emergency_contact: customer.emergency_contact,
+      joining_date: new Date(customer.joining_date).toISOString().split('T')[0],
+      meal_plan_id: customer.meal_plan_id,
+      monthly_rate: customer.monthly_rate,
+      security_deposit: customer.security_deposit,
+      id_proof_type: customer.id_proof_type || '',
+      id_proof_number: customer.id_proof_number || '',
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`${API}/admin/customers/${editingCustomer.id}`, formData);
+      toast.success('Customer updated successfully');
+      setShowEditDialog(false);
+      setEditingCustomer(null);
+      resetForm();
+      fetchData();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to update customer');
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      full_name: '',
+      gender: 'MALE',
+      mobile: '',
+      email: '',
+      address: '',
+      emergency_contact: '',
+      joining_date: new Date().toISOString().split('T')[0],
+      meal_plan_id: '',
+      monthly_rate: 0,
+      security_deposit: 0,
+      id_proof_type: '',
+      id_proof_number: '',
+    });
   };
 
   const filteredCustomers = customers.filter(customer =>
