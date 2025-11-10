@@ -5,6 +5,9 @@ import { Toaster } from '@/components/ui/sonner';
 import { toast } from 'sonner';
 import '@/App.css';
 
+// Import contexts
+import { ThemeProvider } from '@/contexts/ThemeContext';
+
 // Import pages
 import Login from '@/pages/Login';
 import SuperAdminDashboard from '@/pages/SuperAdmin/Dashboard';
