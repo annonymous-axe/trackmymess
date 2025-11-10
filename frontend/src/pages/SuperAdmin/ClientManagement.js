@@ -66,21 +66,63 @@ export default function ClientManagement() {
       await axios.post(`${API}/super-admin/tenants`, formData);
       toast.success('Client created successfully');
       setShowAddDialog(false);
-      setFormData({
-        mess_name: '',
-        owner_name: '',
-        email: '',
-        mobile: '',
-        address: '',
-        capacity: 50,
-        subscription_plan: 'FREE_TRIAL',
-        username: '',
-        password: '',
-      });
+      resetForm();
       fetchClients();
     } catch (error) {
       toast.error(error.response?.data?.detail || 'Failed to create client');
     }
+  };
+
+  const handleEdit = (client) => {
+    setEditingClient(client);
+    setFormData({
+      mess_name: client.mess_name,
+      owner_name: client.owner_name,
+      email: client.email,
+      mobile: client.mobile,
+      address: client.address,
+      capacity: client.capacity,
+      subscription_plan: client.subscription_plan,
+      username: '',
+      password: '',
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      const updateData = {
+        mess_name: formData.mess_name,
+        owner_name: formData.owner_name,
+        mobile: formData.mobile,
+        address: formData.address,
+        capacity: formData.capacity,
+        subscription_plan: formData.subscription_plan,
+      };
+      await axios.put(`${API}/super-admin/tenants/${editingClient.id}`, updateData);
+      toast.success('Client updated successfully');
+      setShowEditDialog(false);
+      setEditingClient(null);
+      resetForm();
+      fetchClients();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to update client');
+    }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      mess_name: '',
+      owner_name: '',
+      email: '',
+      mobile: '',
+      address: '',
+      capacity: 50,
+      subscription_plan: 'FREE_TRIAL',
+      username: '',
+      password: '',
+    });
   };
 
   const formatDate = (dateString) => {
