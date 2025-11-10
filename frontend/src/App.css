@@ -108,6 +108,91 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+  
+  /* Transitions */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==================== Dark Mode Variables ==================== */
+.dark {
+  /* Dark Mode Primary Colors */
+  --primary-50: #0c1e2e;
+  --primary-100: #0f2942;
+  --primary-200: #1a3b5c;
+  --primary-300: #2d5a87;
+  --primary-400: #3b7ab9;
+  --primary-500: #4a9eff;
+  --primary-600: #60b0ff;
+  --primary-700: #7ec0ff;
+  --primary-800: #a0d2ff;
+  --primary-900: #c7e5ff;
+  
+  /* Dark Mode Secondary Colors */
+  --secondary-50: #0a1f1f;
+  --secondary-100: #0f2e2e;
+  --secondary-200: #1a4444;
+  --secondary-300: #2d6a6a;
+  --secondary-400: #3b8f8f;
+  --secondary-500: #4ab8b8;
+  --secondary-600: #60d4d4;
+  --secondary-700: #7ee5e5;
+  --secondary-800: #a0f0f0;
+  --secondary-900: #c7f8f8;
+  
+  /* Dark Mode Semantic Colors */
+  --success: #34d399;
+  --success-light: #064e3b;
+  --warning: #fbbf24;
+  --warning-light: #78350f;
+  --error: #f87171;
+  --error-light: #7f1d1d;
+  --info: #60a5fa;
+  --info-light: #1e3a8a;
+  
+  /* Dark Mode Neutral Colors */
+  --gray-50: #1a1a1a;
+  --gray-100: #2a2a2a;
+  --gray-200: #3a3a3a;
+  --gray-300: #4a4a4a;
+  --gray-400: #6a6a6a;
+  --gray-500: #8a8a8a;
+  --gray-600: #aaaaaa;
+  --gray-700: #cacaca;
+  --gray-800: #e0e0e0;
+  --gray-900: #f5f5f5;
+  
+  /* Dark Mode Backgrounds */
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a1f2e;
+  --bg-tertiary: #242938;
+  --bg-glass: rgba(26, 31, 46, 0.8);
+  --bg-overlay: rgba(0, 0, 0, 0.8);
+  
+  /* Dark Mode Text Colors */
+  --text-primary: #f5f5f5;
+  --text-secondary: #a0a0a0;
+  --text-tertiary: #707070;
+  --text-inverse: #0f1419;
+  
+  /* Dark Mode Border & Dividers */
+  --border-light: #2a2a2a;
+  --border-medium: #3a3a3a;
+  --border-dark: #4a4a4a;
+  
+  /* Dark Mode Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -4px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 8px 10px -6px rgba(0, 0, 0, 0.6);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.75);
+  --shadow-glow: 0 0 30px rgba(74, 158, 255, 0.5);
+}
+
+.dark body {
+  background: linear-gradient(135deg, #0a0e14 0%, #1a1f2e 50%, #0f1419 100%);
+  background-attachment: fixed;
+  color: var(--text-primary);
 }
 
 /* ==================== Global Resets & Base Styles ==================== */
