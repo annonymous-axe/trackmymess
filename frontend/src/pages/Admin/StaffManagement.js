@@ -96,6 +96,34 @@ export default function StaffManagement() {
     }
   };
 
+  const handleEdit = (member) => {
+    setEditingStaff(member);
+    setFormData({
+      full_name: member.full_name,
+      gender: member.gender,
+      mobile: member.mobile,
+      email: member.email || '',
+      address: member.address,
+      role: member.role,
+      joining_date: new Date(member.joining_date).toISOString().split('T')[0],
+      salary: member.salary,
+    });
+    setShowEditDialog(true);
+  };
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`${API}/admin/staff/${editingStaff.id}`, formData);
+      toast.success('Staff updated successfully');
+      setShowEditDialog(false);
+      setEditingStaff(null);
+      fetchStaff();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Failed to update staff');
+    }
+  };
+
   const handleDelete = async (staffId) => {
     if (!window.confirm('Are you sure you want to delete this staff member?')) return;
     
