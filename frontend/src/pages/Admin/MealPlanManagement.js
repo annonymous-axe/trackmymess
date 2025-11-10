@@ -341,6 +341,112 @@ export default function MealPlanManagement() {
             </CardContent>
           </Card>
         )}
+
+        {/* Edit Meal Plan Dialog */}
+        <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Edit Meal Plan</DialogTitle>
+              <DialogDescription>Update meal plan details</DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleUpdate} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="edit_name">Plan Name *</Label>
+                <Input
+                  id="edit_name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit_description">Description *</Label>
+                <Input
+                  id="edit_description"
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Meals Included *</Label>
+                <div className="flex gap-4">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="edit_breakfast"
+                      checked={formData.meals_included.Breakfast}
+                      onCheckedChange={(checked) =>
+                        setFormData({
+                          ...formData,
+                          meals_included: { ...formData.meals_included, Breakfast: checked },
+                        })
+                      }
+                    />
+                    <Label htmlFor="edit_breakfast" className="cursor-pointer">Breakfast</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="edit_lunch"
+                      checked={formData.meals_included.Lunch}
+                      onCheckedChange={(checked) =>
+                        setFormData({
+                          ...formData,
+                          meals_included: { ...formData.meals_included, Lunch: checked },
+                        })
+                      }
+                    />
+                    <Label htmlFor="edit_lunch" className="cursor-pointer">Lunch</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="edit_dinner"
+                      checked={formData.meals_included.Dinner}
+                      onCheckedChange={(checked) =>
+                        setFormData({
+                          ...formData,
+                          meals_included: { ...formData.meals_included, Dinner: checked },
+                        })
+                      }
+                    />
+                    <Label htmlFor="edit_dinner" className="cursor-pointer">Dinner</Label>
+                  </div>
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit_billing_type">Billing Type *</Label>
+                  <Select
+                    value={formData.billing_type}
+                    onValueChange={(value) => setFormData({ ...formData, billing_type: value })}
+                  >
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="MONTHLY">Monthly</SelectItem>
+                      <SelectItem value="PER_DAY">Per Day</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit_rate">Rate (₹) *</Label>
+                  <Input
+                    id="edit_rate"
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={formData.rate}
+                    onChange={(e) => setFormData({ ...formData, rate: parseFloat(e.target.value) })}
+                    required
+                  />
+                </div>
+              </div>
+              <Button type="submit" className="w-full gradient-primary text-white">
+                Update Meal Plan
+              </Button>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </Layout>
   );
