@@ -11,7 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import axios from 'axios';
 import { API } from '@/App';
 import { toast } from 'sonner';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Edit } from 'lucide-react';
 
 export default function MealPlanManagement() {
   const [plans, setPlans] = useState([]);
