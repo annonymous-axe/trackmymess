@@ -16,6 +16,8 @@ import AttendanceManagement from '@/pages/Admin/AttendanceManagement';
 import PauseManagement from '@/pages/Admin/PauseManagement';
 import PaymentManagement from '@/pages/Admin/PaymentManagement';
 import InvoiceManagement from '@/pages/Admin/InvoiceManagement';
+import StaffManagement from '@/pages/Admin/StaffManagement';
+import Reports from '@/pages/Admin/Reports';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
