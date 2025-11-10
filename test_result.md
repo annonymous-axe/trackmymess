@@ -168,3 +168,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Fixed the React validation error in ClientManagement.js. Added formatErrorMessage() helper that handles multiple FastAPI error formats: validation error arrays, detail arrays with error objects, and simple string details. The function extracts field names and messages to display user-friendly errors. Ready for backend testing to ensure endpoints return proper validation errors."
+  - agent: "testing"
+    message: "BACKEND TESTING COMPLETED: Client Creation endpoint working excellently with proper FastAPI validation error format. Client Update endpoint has critical validation gaps - TenantUpdate model missing field validators for mobile and capacity. Frontend formatErrorMessage() function will work correctly with the proper FastAPI error structure returned by create endpoint. Update endpoint needs validation fixes to maintain consistency."
