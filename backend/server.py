@@ -183,6 +183,12 @@ class TenantCreate(BaseModel):
         if not v.isalnum():
             raise ValueError('Username must be alphanumeric')
         return v
+    
+    @field_validator('password')
+    def validate_password(cls, v):
+        if len(v) < 8:
+            raise ValueError('Password must be at least 8 characters')
+        return v
 
 class TenantUpdate(BaseModel):
     mess_name: Optional[str] = None
@@ -192,6 +198,19 @@ class TenantUpdate(BaseModel):
     capacity: Optional[int] = None
     subscription_plan: Optional[SubscriptionPlan] = None
     status: Optional[TenantStatus] = None
+    
+    @field_validator('mobile')
+    def validate_mobile(cls, v):
+        if v is not None:
+            if not v.isdigit() or len(v) != 10:
+                raise ValueError('Mobile must be 10 digits')
+        return v
+    
+    @field_validator('capacity')
+    def validate_capacity(cls, v):
+        if v is not None and v <= 0:
+            raise ValueError('Capacity must be greater than 0')
+        return v
 
 class Tenant(BaseModel):
     model_config = ConfigDict(extra="ignore")
