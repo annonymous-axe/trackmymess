@@ -763,3 +763,338 @@ table tbody td {
   outline: 2px solid var(--primary-500);
   outline-offset: 2px;
 }
+
+
+/* ==================== Dark Mode Glassmorphism Effects ==================== */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.dark .glass-effect,
+.glass-effect-dark {
+  background: rgba(26, 31, 46, 0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  transition: all 0.3s ease;
+}
+
+.dark .glass-card {
+  background: rgba(26, 31, 46, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
+}
+
+.glass-card:hover {
+  box-shadow: 0 12px 48px 0 rgba(31, 38, 135, 0.2);
+  transform: translateY(-2px);
+}
+
+.dark .glass-card:hover {
+  box-shadow: 0 12px 48px 0 rgba(0, 0, 0, 0.8);
+}
+
+/* ==================== Advanced Gradient Effects ==================== */
+.gradient-primary {
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+}
+
+.dark .gradient-primary {
+  background: linear-gradient(135deg, var(--primary-500) 0%, var(--secondary-500) 100%);
+}
+
+.gradient-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-shine::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  animation: shine 3s infinite;
+}
+
+.dark .gradient-shine::before {
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.gradient-border {
+  position: relative;
+  background: var(--bg-primary);
+  border-radius: 12px;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--primary-500), var(--secondary-500));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ==================== Advanced Card Effects ==================== */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-2xl);
+}
+
+.card-glow {
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s ease;
+}
+
+.card-glow:hover {
+  box-shadow: var(--shadow-glow);
+}
+
+/* ==================== Animated Backgrounds ==================== */
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    var(--primary-500),
+    var(--secondary-500),
+    var(--primary-400),
+    var(--secondary-400)
+  );
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.dark .animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    var(--primary-600),
+    var(--secondary-600),
+    var(--primary-500),
+    var(--secondary-500)
+  );
+  background-size: 400% 400%;
+}
+
+/* ==================== Neon Effects for Dark Mode ==================== */
+.dark .neon-glow {
+  box-shadow: 
+    0 0 5px var(--primary-500),
+    0 0 10px var(--primary-500),
+    0 0 20px var(--primary-500),
+    0 0 40px var(--primary-600);
+}
+
+.dark .neon-text {
+  color: var(--primary-500);
+  text-shadow: 
+    0 0 7px var(--primary-500),
+    0 0 10px var(--primary-500),
+    0 0 21px var(--primary-500),
+    0 0 42px var(--primary-600);
+}
+
+/* ==================== Smooth Transitions ==================== */
+* {
+  transition: background-color 0.3s ease, 
+              border-color 0.3s ease,
+              color 0.3s ease;
+}
+
+/* ==================== Dark Mode Specific Component Overrides ==================== */
+.dark input,
+.dark textarea,
+.dark select {
+  background-color: var(--bg-tertiary);
+  border-color: var(--border-light);
+  color: var(--text-primary);
+}
+
+.dark input:focus,
+.dark textarea:focus,
+.dark select:focus {
+  border-color: var(--primary-500);
+  box-shadow: 0 0 0 3px rgba(74, 158, 255, 0.1);
+}
+
+.dark button {
+  color: var(--text-primary);
+}
+
+.dark .bg-white {
+  background-color: var(--bg-secondary) !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: var(--bg-tertiary) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: var(--gray-100) !important;
+}
+
+.dark .text-gray-900 {
+  color: var(--text-primary) !important;
+}
+
+.dark .text-gray-700 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-600 {
+  color: var(--text-secondary) !important;
+}
+
+.dark .text-gray-500 {
+  color: var(--text-tertiary) !important;
+}
+
+.dark .border-gray-200 {
+  border-color: var(--border-light) !important;
+}
+
+.dark .border-gray-300 {
+  border-color: var(--border-medium) !important;
+}
+
+.dark .hover\:bg-gray-50:hover {
+  background-color: var(--gray-100) !important;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  background-color: var(--gray-200) !important;
+}
+
+/* ==================== Frosted Glass Navigation ==================== */
+.dark nav,
+.dark .sidebar {
+  background: rgba(26, 31, 46, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==================== Dark Mode Tables ==================== */
+.dark table {
+  border-color: var(--border-light);
+}
+
+.dark th {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+
+.dark td {
+  border-color: var(--border-light);
+  color: var(--text-secondary);
+}
+
+.dark tr:hover {
+  background-color: var(--gray-100);
+}
+
+/* ==================== Dark Mode Cards ==================== */
+.dark .card,
+.dark [class*="Card"] {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ==================== Dark Mode Badges ==================== */
+.dark .badge {
+  background-color: var(--gray-200);
+  color: var(--text-primary);
+}
+
+/* ==================== Pulse Animation for Dark Mode ==================== */
+.dark .animate-pulse-glow {
+  animation: pulseGlow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(74, 158, 255, 0.3);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 40px rgba(74, 158, 255, 0.6);
+  }
+}
+
+/* ==================== Scrollbar Styling ==================== */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-400);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-500);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
