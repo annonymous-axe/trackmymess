@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Utensils, LogOut, User, LayoutDashboard, Users, Sandwich, Calendar, PauseCircle, CreditCard, FileText, Building2 } from 'lucide-react';
+import { Utensils, LogOut, User, LayoutDashboard, Users, Sandwich, Calendar, PauseCircle, CreditCard, FileText, Building2, Users2, BarChart3 } from 'lucide-react';
 
 export default function Layout({ children, title }) {
   const { user, logout } = useAuth();
