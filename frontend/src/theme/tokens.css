@@ -1,0 +1,357 @@
+/* src/theme/tokens.css - SINGLE SOURCE OF TRUTH */
+
+:root {
+  /* ==================== TYPOGRAPHY TOKENS ==================== */
+
+  --font-family-primary: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-heading: 'Rubik', 'Nunito', sans-serif;
+  --font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* --font-family-primary: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-family-heading: 'Poppins', 'Manrope', sans-serif;
+  --font-family-mono: 'Source Code Pro', 'Courier New', monospace;   */
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem;      /* 12px */
+  --font-size-sm: 0.875rem;     /* 14px */
+  --font-size-base: 1rem;       /* 16px */
+  --font-size-lg: 1.125rem;     /* 18px */
+  --font-size-xl: 1.25rem;      /* 20px */
+  --font-size-2xl: 1.5rem;      /* 24px */
+  --font-size-3xl: 1.875rem;    /* 30px */
+  --font-size-4xl: 2.25rem;     /* 36px */
+  --font-size-5xl: 3rem;        /* 48px */
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.625;
+  --line-height-loose: 2;
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.025em;
+  --letter-spacing-wider: 0.05em;
+
+  /* ==================== SPACING TOKENS ==================== */
+  --spacing-0: 0;
+  --spacing-1: 0.25rem;   /* 4px */
+  --spacing-2: 0.5rem;    /* 8px */
+  --spacing-3: 0.75rem;   /* 12px */
+  --spacing-4: 1rem;      /* 16px */
+  --spacing-5: 1.25rem;   /* 20px */
+  --spacing-6: 1.5rem;    /* 24px */
+  --spacing-8: 2rem;      /* 32px */
+  --spacing-10: 2.5rem;   /* 40px */
+  --spacing-12: 3rem;     /* 48px */
+  --spacing-16: 4rem;     /* 64px */
+  --spacing-20: 5rem;     /* 80px */
+  --spacing-24: 6rem;     /* 96px */
+
+  /* ==================== BORDER TOKENS ==================== */
+  /* Border Widths */
+  --border-width-none: 0;
+  --border-width-thin: 1px;
+  --border-width-medium: 2px;
+  --border-width-thick: 4px;
+
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.375rem;   /* 6px */
+  --radius-md: 0.5rem;     /* 8px */
+  --radius-lg: 0.75rem;    /* 12px */
+  --radius-xl: 1rem;       /* 16px */
+  --radius-2xl: 1.5rem;    /* 24px */
+  --radius-3xl: 2rem;      /* 32px */
+  --radius-full: 9999px;
+
+  /* Card Specific */
+  --card-radius: var(--radius-xl);
+  --card-border-width: var(--border-width-thin);
+  --card-padding: var(--spacing-6);
+  --card-padding-sm: var(--spacing-4);
+  --card-padding-lg: var(--spacing-8);
+
+  /* ==================== SHADOW TOKENS ==================== */
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* ==================== TRANSITION TOKENS ==================== */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slower: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ==================== Z-INDEX TOKENS ==================== */
+  --z-base: 0;
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+
+  /* ==================== COLOR PALETTE - DEFAULT (Indigo/Purple) ==================== */
+  --color-primary-50: #f0f0ff;
+  --color-primary-100: #e0e0ff;
+  --color-primary-200: #c7c7ff;
+  --color-primary-300: #a5a5ff;
+  --color-primary-400: #8585ff;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #5558e3;
+  --color-primary-700: #4745d4;
+  --color-primary-800: #3a38b8;
+  --color-primary-900: #2d2b9c;
+  --color-primary-950: #1a1860;
+
+  --color-secondary-50: #e6fbff;
+  --color-secondary-100: #d0f5ff;
+  --color-secondary-200: #a8edff;
+  --color-secondary-300: #6de2ff;
+  --color-secondary-400: #2dd4f5;
+  --color-secondary-500: #06b6d4;
+  --color-secondary-600: #0891b2;
+  --color-secondary-700: #0e7490;
+  --color-secondary-800: #155e75;
+  --color-secondary-900: #164e63;
+  --color-secondary-950: #083344;
+
+  --color-success-50: #edfff5;
+  --color-success-100: #d5ffea;
+  --color-success-200: #aeffd5;
+  --color-success-300: #70ffb6;
+  --color-success-400: #2bfa8e;
+  --color-success-500: #00e06c;
+  --color-success-600: #00b857;
+  --color-success-700: #009046;
+  --color-success-800: #06713a;
+  --color-success-900: #075d32;
+  --color-success-950: #003519;
+
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fff4c6;
+  --color-warning-200: #ffe788;
+  --color-warning-300: #ffd549;
+  --color-warning-400: #ffc220;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+  --color-warning-950: #451a03;
+
+  --color-danger-50: #fff1f2;
+  --color-danger-100: #ffe4e6;
+  --color-danger-200: #fecdd3;
+  --color-danger-300: #fda4af;
+  --color-danger-400: #fb7185;
+  --color-danger-500: #f43f5e;
+  --color-danger-600: #e11d48;
+  --color-danger-700: #be123c;
+  --color-danger-800: #9f1239;
+  --color-danger-900: #881337;
+  --color-danger-950: #4c0519;
+
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  /* ==================== SEMANTIC COLOR TOKENS (Light Mode) ==================== */
+  --background: var(--color-neutral-50);
+  --background-secondary: var(--color-neutral-100);
+  --background-tertiary: var(--color-neutral-200);
+  
+  --foreground: var(--color-neutral-900);
+  --foreground-secondary: var(--color-neutral-700);
+  --foreground-muted: var(--color-neutral-500);
+
+  --border-color: var(--color-neutral-200);
+  --border-color-strong: var(--color-neutral-300);
+
+  --card-background: var(--color-neutral-0);
+  --card-border: var(--border-color);
+
+  /* Popover / Overlay tokens (used by dropdowns, popovers, menus) */
+  /* Ensure popovers have a solid background and readable foreground in both themes */
+  --popover: var(--card-background);
+  --popover-foreground: var(--foreground);
+
+  /* ==================== RGB HELPER TOKENS (for alpha overlays) ==================== */
+  /* Use: rgba(var(--color-primary-500-rgb), 0.2) for semi-transparent colors */
+  --color-primary-500-rgb: 99, 102, 241;        /* #6366f1 */
+  --color-secondary-500-rgb: 6, 182, 212;       /* #06b6d4 */
+  --color-success-500-rgb: 0, 224, 108;         /* #00e06c */
+  --color-warning-500-rgb: 245, 158, 11;        /* #f59e0b */
+  --color-danger-500-rgb: 244, 63, 94;          /* #f43f5e */
+  --color-neutral-0-rgb: 255, 255, 255;         /* #ffffff */
+  --color-neutral-50-rgb: 250, 250, 250;        /* #fafafa */
+  --color-neutral-100-rgb: 244, 244, 245;       /* #f4f4f5 */
+  --color-neutral-900-rgb: 24, 24, 27;          /* #18181b */
+  --color-neutral-950-rgb: 9, 9, 11;            /* #09090b */
+
+  /* ==================== CONTAINER MAX-WIDTHS ==================== */
+  --container-sm: 640px;
+  --container-md: 768px;
+  --container-lg: 1024px;
+  --container-xl: 1280px;
+  --container-2xl: 1536px;
+
+  /* ==================== GRADIENTS ==================== */
+  --gradient-primary: linear-gradient(135deg, var(--color-primary-500) 0%, var(--color-primary-600) 100%);
+  --gradient-secondary: linear-gradient(135deg, var(--color-secondary-500) 0%, var(--color-secondary-600) 100%);
+  --gradient-success: linear-gradient(135deg, var(--color-success-500) 0%, var(--color-success-600) 100%);
+  --gradient-hero: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #faf5ff 100%);
+}
+
+/* ==================== DARK MODE OVERRIDES ==================== */
+.dark {
+  --background: var(--color-neutral-950);
+  --background-secondary: var(--color-neutral-900);
+  --background-tertiary: var(--color-neutral-800);
+  
+  --foreground: var(--color-neutral-50);
+  --foreground-secondary: var(--color-neutral-300);
+  --foreground-muted: var(--color-neutral-400);
+
+  --border-color: var(--color-neutral-800);
+  --border-color-strong: var(--color-neutral-700);
+
+  --card-background: var(--color-neutral-900);
+  --card-border: var(--border-color);
+
+  /* Popover tokens for dark mode */
+  --popover: var(--card-background);
+  --popover-foreground: var(--foreground);
+
+  --gradient-hero: linear-gradient(135deg, #09090b 0%, #18181b 50%, #27272a 100%);
+
+  /* Enhanced shadows for dark mode */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.6), 0 8px 10px -6px rgb(0 0 0 / 0.6);
+}
+
+/* ==================== PALETTE: NEON (Aurora Purple/Pink) ==================== */
+:root[data-palette="neon"] {
+  --color-primary-50: #faf5ff;
+  --color-primary-100: #f3e8ff;
+  --color-primary-200: #e9d5ff;
+  --color-primary-300: #d8b4fe;
+  --color-primary-400: #c084fc;
+  --color-primary-500: #a855f7;
+  --color-primary-600: #9333ea;
+  --color-primary-700: #7e22ce;
+  --color-primary-800: #6b21a8;
+  --color-primary-900: #581c87;
+  --color-primary-950: #3b0764;
+
+  --color-secondary-50: #fff1f2;
+  --color-secondary-100: #ffe4e6;
+  --color-secondary-200: #fecdd3;
+  --color-secondary-300: #fda4af;
+  --color-secondary-400: #fb7185;
+  --color-secondary-500: #f43f5e;
+  --color-secondary-600: #e11d48;
+  --color-secondary-700: #be123c;
+  --color-secondary-800: #9f1239;
+  --color-secondary-900: #881337;
+
+  --gradient-primary: linear-gradient(135deg, #a855f7 0%, #f43f5e 100%);
+  --gradient-hero: linear-gradient(135deg, #faf5ff 0%, #fff1f2 50%, #ffe4e6 100%);
+}
+
+.dark[data-palette="neon"] {
+  --gradient-hero: linear-gradient(135deg, #0f0514 0%, #1a0b24 50%, #1e1028 100%);
+}
+
+/* ==================== PALETTE: TEAL (Ocean) ==================== */
+:root[data-palette="teal"] {
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+  --color-primary-950: #042f2e;
+
+  --color-secondary-50: #ecfdf5;
+  --color-secondary-100: #d1fae5;
+  --color-secondary-200: #a7f3d0;
+  --color-secondary-300: #6ee7b7;
+  --color-secondary-400: #34d399;
+  --color-secondary-500: #10b981;
+  --color-secondary-600: #059669;
+  --color-secondary-700: #047857;
+  --color-secondary-800: #065f46;
+  --color-secondary-900: #064e3b;
+
+  --gradient-primary: linear-gradient(135deg, #14b8a6 0%, #10b981 100%);
+  --gradient-hero: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 50%, #d1fae5 100%);
+}
+
+.dark[data-palette="teal"] {
+  --gradient-hero: linear-gradient(135deg, #021110 0%, #042f2e 50%, #064e3b 100%);
+}
+
+/* ==================== PALETTE: ORANGE (Sunset) ==================== */
+:root[data-palette="orange"] {
+  --color-primary-50: #fff7ed;
+  --color-primary-100: #ffedd5;
+  --color-primary-200: #fed7aa;
+  --color-primary-300: #fdba74;
+  --color-primary-400: #fb923c;
+  --color-primary-500: #f97316;
+  --color-primary-600: #ea580c;
+  --color-primary-700: #c2410c;
+  --color-primary-800: #9a3412;
+  --color-primary-900: #7c2d12;
+  --color-primary-950: #431407;
+
+  --color-secondary-50: #fef2f2;
+  --color-secondary-100: #fee2e2;
+  --color-secondary-200: #fecaca;
+  --color-secondary-300: #fca5a5;
+  --color-secondary-400: #f87171;
+  --color-secondary-500: #ef4444;
+  --color-secondary-600: #dc2626;
+  --color-secondary-700: #b91c1c;
+  --color-secondary-800: #991b1b;
+  --color-secondary-900: #7f1d1d;
+
+  --gradient-primary: linear-gradient(135deg, #f97316 0%, #ef4444 100%);
+  --gradient-hero: linear-gradient(135deg, #fff7ed 0%, #fef2f2 50%, #fee2e2 100%);
+}
+
+.dark[data-palette="orange"] {
+  --gradient-hero: linear-gradient(135deg, #1c0a00 0%, #2d1508 50%, #431407 100%);
+}
