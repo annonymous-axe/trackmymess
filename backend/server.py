@@ -137,6 +137,24 @@ class PaymentStatus(str, Enum):
     PENDING = "PENDING"
     COMPLETED = "COMPLETED"
     FAILED = "FAILED"
+
+class PauseRequestStatus(str, Enum):
+    PENDING = "PENDING"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+
+class StaffRole(str, Enum):
+    MANAGER = "MANAGER"
+    ATTENDANCE_OPERATOR = "ATTENDANCE_OPERATOR"
+    ACCOUNTANT = "ACCOUNTANT"
+    COOK = "COOK"
+    HELPER = "HELPER"
+
+# Plan Configuration
+PLAN_CONFIG = {
+    SubscriptionPlan.FREE_TRIAL: {
+        "name": "Free Trial",
+        "price": 0,
         "capacity": 50,
         "allow_downloads": False,
         "trial_days": 14
@@ -427,6 +445,19 @@ class Invoice(BaseModel):
     invoice_number: str
     month: int
     year: int
+    total_days: int
+    present_days: int
+    pause_days: int
+    meal_charges: float
+    adjustments: float = 0
+    total_amount: float
+    paid_amount: float = 0
+    due_amount: float
+    generated_at: datetime
+
+# Dashboard Models
+class SuperAdminDashboard(BaseModel):
+    total_clients: int
     active_clients: int
     trial_clients: int
     expired_clients: int
